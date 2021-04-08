@@ -1,0 +1,90 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="row">
+  <div class="card shadow p-3 col-md-6 offset-md-3 col-xl-4 offset-xl-4">
+    <div class="card-body">
+      <div class="card-title">
+        <h2>Edit <strong><%= dogpark.title %> </strong></h2>
+      </div>
+      <form
+        action="/dogparks/<%= dogpark._id %>?_method=PUT"
+        method="POST"
+        novalidate
+        class="validated-form"
+        enctype="multipart/form-data"
+      >
+        <div class="mb-3">
+          <label class="form-label" for="title">Title</label>
+          <input
+            class="form-control"
+            type="text"
+            id="title"
+            name="dogpark[title]"
+            value="<%= dogpark.title %> "
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="location">Location</label>
+          <input
+            class="form-control"
+            type="text"
+            id="location"
+            name="dogpark[location]"
+            value="<%= dogpark.location %> "
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="price">Dog Park Price</label>
+          <div class="input-group">
+            <span class="input-group-text" id="price-label">$</span>
+            <input
+              type="text"
+              class="form-control"
+              id="price"
+              placeholder="0.00"
+              aria-label="price"
+              aria-describedby="price-label"
+              name="dogpark[price]"
+              value="<%= dogpark.price %> "
+              required
+            />
+          </div>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="description">Description</label>
+          <textarea class="form-control" name="dogpark[description]" id="description" cols="30" rows="10" required>
+<%= dogpark.description %> </textarea
+          >
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Add More Image(s)</label>
+          <input class="form-control" type="file" id="image" name="image" multiple />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="mb-3">
+          <% dogpark.images.forEach((img, i) => { %>
+          <img src="<%= img.thumbnail %> " alt="" class="img-thumbnail" />
+          <div class="form-check-inline">
+            <input type="checkbox" name="deleteImages[]" value="<%= img.filename %>" id="<%= i %> " />
+          </div>
+          <label for="<%= i %> ">Delete?</label>
+          <% }) %>
+        </div>
+        <div class="d-grid gap-2">
+          <button class="btn btn-success">Update <strong><%= dogpark.title %> </strong></button>
+        </div>
+      </form>
+      <div>
+        <a href="/dogparks/<%= dogpark._id %> ">Return to <strong><%= dogpark.title %> </strong></a>
+      </div>
+    </div>
+  </div>
+</div>

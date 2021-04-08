@@ -1,0 +1,39 @@
+<% layout('layouts/boilerplate') %>
+<div id="cluster-map"></div>
+<h1>All Dog Parks</h1>
+<div>
+  <a href="/dogparks/new">Add a new Dog Park</a>
+</div>
+<% for(let park of dogpark) {%>
+<div class="card mb-3">
+  <div class="row">
+    <div class="col-md-4">
+      <% if(park.images.length) { %>
+      <img src="<%= park.images[0].url %>" alt="" class="img-fluid" />
+      <% } else { %>
+      <img src="" alt="no image(s)" class="img-fluid" />
+      <% } %>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">
+          <%= park.title %><small class="text-muted" style="text-transform: capitalize">
+            // <%= park.author.username %>
+          </small>
+        </h5>
+        <p class="card-text"><%= park.description %></p>
+        <p class="card-text">
+          <small class="text-muted"> <%= park.location %> </small>
+        </p>
+        <a href="/dogparks/<%= park._id %> " class="btn btn-primary">Visit <%= park.title %> </a>
+      </div>
+    </div>
+  </div>
+</div>
+<%}%>
+
+<script>
+  const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+  const dogpark = { features: <%-JSON.stringify(dogpark)%>};
+</script>
+<script src="/js/clusterMap.js"></script>
